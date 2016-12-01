@@ -1,46 +1,40 @@
 "use strict";
 
-app.factory("ItemStorage", () => {
-	let items = [
-	  {
-	    id: 0,
-	    task: "mow the lawn",
-	    isCompleted: false,
-	    dueDate: "12/5/17",
-	    assignedTo: "Greg",
-	    location: "Joe's house",
-	    urgency: "low",
-	    dependencies: "sunshine, clippers, hat, water, headphones"
-	  },
-	  {
-	    id: 1,
-	    task: "grade quizzes",
-	    isCompleted: false,
-	    dueDate: "12/5/15",
-	    assignedTo: "Christina",
-	    location: "NSS",
-	    urgency: "high",
-	    dependencies: "wifi, tissues, vodka"
-	  },
-	  {
-	    id: 2,
-	    task: "take a nap",
-	    isCompleted: false,
-	    dueDate: "5/21/16",
-	    assignedTo: "Joe",
-	    location: "Porch of lakefront cabin",
-	    urgency: "medium",
-	    dependencies: "hammock, silence"
-	  }
-	];
+app.factory("ItemStorage", ($http, FBCreds) => {
 
 	let getItemList = () => {
-		return items;
+		let items = [];
+		return new Promise((resolve, reject) => {
+			$http.get(`${FBCreds.URL}/items.json`)
+			.success( (itemObject) => {
+				let itemCollection = itemObject;
+				Object.keys(itemCollection).forEach( (key) => {
+					itemCollection[key].id = key;
+					items.push(itemCollection[key]);
+				});
+				resolve(items);
+			})
+			.error( (error) => {
+				reject(error);
+			});
+		});
 	};
 
-	let postNewItem = (newTask) => {
-		items.push(newTask);
+	let getSingleItem = (itemId) => {
+		return new Promise( (resolve, reject) => {
+			$http.get(`${FBCreds.URL}/items/${itemId}.json`)
+			.success( (itemObject) => {
+				resolve(itemObject);
+			})
+			.error( (error) => {
+				reject(error);
+			});
+		});
 	};
 
-	return {getItemList, postNewItem};
+	// let postNewItem = (newTask) => {
+	// 	items.push(newTask);
+	// };
+
+	return {getItemList, getSingleItem};
 });

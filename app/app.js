@@ -9,10 +9,10 @@ app.config(function($routeProvider){
 		controller: 'ItemListCtrl'
 	})
 	.when('/items/new', {
-		templateUrl: 'partials/item-form/html',
+		templateUrl: 'partials/item-form.html',
 		controller: 'ItemNewCtrl'
 	})
-	.when('/items/details', {
+	.when('/items/:itemId', {
 		templateUrl: 'partials/item-details.html',
 		controller: 'ItemViewCtrl'
 	})

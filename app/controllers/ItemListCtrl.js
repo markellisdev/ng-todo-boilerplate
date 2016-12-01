@@ -1,5 +1,9 @@
 "use strict";
 
 app.controller('ItemListCtrl', function($scope, ItemStorage){
-	$scope.items = ItemStorage.getItemList();
+	ItemStorage.getItemList()
+	.then( (itemArray) => {
+		$scope.items = itemArray;
+		$scope.$apply();
+	});
 });

@@ -16,7 +16,7 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="col-xs-1"><input type="checkbox" name=""/></div>
-      <div class="col-xs-7"><a ng-href="#/items/details"></a>{{item.task}}</div><!--Step 6 part ii-->
+      <div class="col-xs-7"><a ng-href="#/items/{{item.id}}">{{item.task}}</a></div><!--Step 6 part ii-->
       <div class="col-xs-2">{{item.dueDate}}</div><!--Step 6 part ii-->
       <div class="col-xs-1">{{item.assignedTo}}</div><!--Step 6 part iii-->
       <div class="col-xs-1"><button class="btn btn-danger">X</button></div>
