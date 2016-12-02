@@ -32,9 +32,17 @@ app.factory("ItemStorage", ($http, FBCreds) => {
 		});
 	};
 
-	// let postNewItem = (newTask) => {
-	// 	items.push(newTask);
-	// };
+	let postNewItem = (newTask) => {
+		return new Promise ( (resolve, reject) => {
+			$http.post(`${FBCreds.URL}/items.json`, angular.toJson(newTask))
+			.success( (obj) => {
+				resolve(obj);
+			})
+			.error( (error) => {
+				reject(error);
+			});
+		});
+	};
 
 	return {getItemList, getSingleItem};
 });
